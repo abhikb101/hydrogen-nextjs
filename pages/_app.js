@@ -5,13 +5,35 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import TagManager from "react-gtm-module";
 import "styles/style.scss";
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBemClpyB1plR0jjQaYZUXm70tTKT3JtYw",
+  authDomain: "zoloconfessions.firebaseapp.com",
+  projectId: "zoloconfessions",
+  storageBucket: "zoloconfessions.appspot.com",
+  messagingSenderId: "796601033878",
+  appId: "1:796601033878:web:4877fb282a0a0602b20eb7",
+  measurementId: "G-ECC34E8YW0",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
 
 const App = ({ Component, pageProps }) => {
+  console.log(Component, pageProps);
   // import google font css
   const pf = theme.fonts.font_family.primary;
   const sf = theme.fonts.font_family.secondary;
   const [fontcss, setFontcss] = useState();
+
   useEffect(() => {
     fetch(
       `https://fonts.googleapis.com/css2?family=${pf}${
@@ -24,6 +46,7 @@ const App = ({ Component, pageProps }) => {
   const tagManagerArgs = {
     gtmId: config.params.tag_manager_id,
   };
+
   useEffect(() => {
     setTimeout(() => {
       process.env.NODE_ENV === "production" &&
@@ -53,7 +76,7 @@ const App = ({ Component, pageProps }) => {
           content="width=device-width, initial-scale=1, maximum-scale=5"
         />
       </Head>
-        <Component {...pageProps} />
+      <Component {...pageProps} />
     </>
   );
 };

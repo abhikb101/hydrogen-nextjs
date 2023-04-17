@@ -8,11 +8,13 @@ import Social from "@layouts/components/Social";
 import { getSinglePage } from "@lib/contentParser";
 import { sortByDate } from "@lib/utils/sortFunctions";
 import { markdownify } from "@lib/utils/textConverter";
+import Lottie from "lottie-react";
+import ZLogo from "../public/images/z-letter.json";
 const { blog_folder } = config.settings;
 
 const Home = ({ posts }) => {
   const { pagination } = config.settings;
-  const { name, image, designation, bio } = config.profile;
+  const { name, bio } = config.profile;
   const sortPostByDate = sortByDate(posts);
 
   return (
@@ -21,21 +23,18 @@ const Home = ({ posts }) => {
       <div className="section">
         <div className="container">
           <div className="row">
-            <div className="mx-auto text-center lg:col-8">
-              <ImageFallback
-                className="mx-auto rounded-full"
-                src={image}
-                width={220}
-                height={220}
-                priority={true}
-                alt={name}
+            <div
+              className="mx-auto text-center lg:col-8"
+              style={{ justifyContent: "center" }}
+            >
+              <Lottie
+                className="mx-auto"
+                animationData={ZLogo}
+                loop={true}
+                style={{ width: 200, height: 200 }}
               />
-              {markdownify(
-                name,
-                "h1",
-                "mt-12 text-6xl lg:text-8xl font-semibold"
-              )}
-              {markdownify(designation, "p", "mt-6 text-primary text-xl")}
+
+              {markdownify(name, "h1", "text-6xl lg:text-8xl font-semibold")}
               {markdownify(bio, "p", "mt-4 leading-9 text-xl")}
               <Social source={social} className="profile-social-icons mt-8" />
             </div>

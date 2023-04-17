@@ -90,13 +90,12 @@ const Base = ({
         />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-
-      {router.route !== "/posts/[single]" && (
+      {/* remove header */}
+      {/* {router.route !== "/posts/[single]" && (
         <TaxonomySlugProvider>
           <Header />
         </TaxonomySlugProvider>
-      )}
-
+      )} */}
       {/* main site */}
       <main>{children}</main>
       <Footer />
