@@ -80,16 +80,13 @@ export default Home;
 export const getServerSideProps = async () => {
   const getConfessions = async () => {
     const confessionsCollection = collection(firestore, "confessions");
-    // construct a query to get up to 10 undone todos
     const confessionsQuery = query(
       confessionsCollection,
       where("approved", "==", true),
       limit(10)
     );
-    // get the todos
     const querySnapshot = await getDocs(confessionsQuery);
 
-    // map through todos adding them to an array
     const result = [];
     querySnapshot.forEach((snapshot) => {
       result.push(snapshot);
