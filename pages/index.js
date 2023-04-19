@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 
 const Home = ({ posts }) => {
   const { pagination } = config.settings;
-  const { name } = config.profile;
+  const { name, bio } = config.profile;
   const sortPostByDate = sortByDate(posts);
 
   return (
@@ -41,6 +41,7 @@ const Home = ({ posts }) => {
               />
 
               {markdownify(name, "h1", "text-6xl lg:text-8xl font-semibold")}
+              {markdownify(bio, "p", "mt-4 leading-9 text-xl")}
             </div>
           </div>
         </div>
