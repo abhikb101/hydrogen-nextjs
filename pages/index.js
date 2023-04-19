@@ -1,20 +1,26 @@
 import config from "@config/config.json";
-import social from "@config/social.json";
 import Base from "@layouts/Baseof";
-import ImageFallback from "@layouts/components/ImageFallback";
 import Pagination from "@layouts/components/Pagination";
 import Post from "@layouts/components/Post";
-import Social from "@layouts/components/Social";
-import { getSinglePage } from "@lib/contentParser";
 import { sortByDate } from "@lib/utils/sortFunctions";
 import { markdownify } from "@lib/utils/textConverter";
 import Lottie from "lottie-react";
 import ZLogo from "../public/images/z-letter.json";
-const { blog_folder } = config.settings;
+import { firestore } from "@lib/firestore";
+import {
+  collection,
+  QueryDocumentSnapshot,
+  DocumentData,
+  query,
+  where,
+  limit,
+  getDocs,
+} from "@firebase/firestore";
+import { useEffect, useState } from "react";
 
 const Home = ({ posts }) => {
   const { pagination } = config.settings;
-  const { name, bio } = config.profile;
+  const { name } = config.profile;
   const sortPostByDate = sortByDate(posts);
 
   return (
@@ -35,8 +41,6 @@ const Home = ({ posts }) => {
               />
 
               {markdownify(name, "h1", "text-6xl lg:text-8xl font-semibold")}
-              {markdownify(bio, "p", "mt-4 leading-9 text-xl")}
-              <Social source={social} className="profile-social-icons mt-8" />
             </div>
           </div>
         </div>
@@ -73,11 +77,39 @@ const Home = ({ posts }) => {
 export default Home;
 
 // for homepage data
-export const getStaticProps = async () => {
-  const posts = getSinglePage(`content/${blog_folder}`);
+export const getServerSideProps = async () => {
+  const getConfessions = async () => {
+    const confessionsCollection = collection(firestore, "confessions");
+    // construct a query to get up to 10 undone todos
+    const confessionsQuery = query(
+      confessionsCollection,
+      where("approved", "==", true),
+      limit(10)
+    );
+    // get the todos
+    const querySnapshot = await getDocs(confessionsQuery);
+
+    // map through todos adding them to an array
+    const result = [];
+    querySnapshot.forEach((snapshot) => {
+      result.push(snapshot);
+    });
+    return result;
+  };
+  const posts = await getConfessions();
+  const postsArray = [];
+
+  posts.forEach((e) => {
+    postsArray.push({
+        body: e?.data()?.body || "",
+        title: e?.data()?.title || "",
+        date: e?.data()?.date.toDate().toString() || "",
+        author: e?.data()?.author || "",
+    });
+  });
   return {
     props: {
-      posts: posts,
+      posts: postsArray,
     },
   };
 };
