@@ -49,6 +49,7 @@ const Home = ({ posts, visitorCount }) => {
 
               {markdownify(name, "h1", "text-6xl lg:text-8xl font-semibold")}
               {markdownify(bio, "p", "mt-4 leading-9 text-xl")}
+              {markdownify("An anonymous and judgment-free platform for people to share their deepest thoughts and connect with others. Join our trusted community and share your secrets without fear of judgment or exposure.", "p", "mt-4 leading-9 text-xl")}
               <button
                 onClick={() => {
                   window.location.href = "/post";
