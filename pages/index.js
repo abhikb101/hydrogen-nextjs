@@ -42,6 +42,16 @@ const Home = ({ posts }) => {
 
               {markdownify(name, "h1", "text-6xl lg:text-8xl font-semibold")}
               {markdownify(bio, "p", "mt-4 leading-9 text-xl")}
+              <button
+                onClick={() => {
+                  window.location.href = "/post";
+                }}
+                style={{ marginTop: 20 }}
+                type="button"
+                class="mb-2 mr-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                New Post
+              </button>
             </div>
           </div>
         </div>
@@ -99,10 +109,10 @@ export const getServerSideProps = async () => {
 
   posts.forEach((e) => {
     postsArray.push({
-        body: e?.data()?.body || "",
-        title: e?.data()?.title || "",
-        date: e?.data()?.date.toDate().toString() || "",
-        author: e?.data()?.author || "",
+      body: e?.data()?.body || "",
+      title: e?.data()?.title || "",
+      date: e?.data()?.date.toDate().toString() || "",
+      author: e?.data()?.author || "",
     });
   });
   return {
