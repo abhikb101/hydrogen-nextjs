@@ -28,8 +28,11 @@ const Post = () => {
         },
         body: JSON.stringify({ title, body, zolo }),
       });
-    } catch (e) {}
+    } catch (e) {
+      window.location.href = "/error";
+    }
     setLoading(false);
+    window.location.href = "/success";
   };
   return (
     <div class="mb-6" style={{ padding: "25px 50px" }}>
@@ -101,7 +104,7 @@ const Post = () => {
                 fill="currentColor"
               />
             </svg>
-          )}{" "}
+          )}
           Submit
         </button>
       </div>

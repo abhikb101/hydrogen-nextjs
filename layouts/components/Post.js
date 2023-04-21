@@ -13,6 +13,9 @@ const Post = ({ post, className }) => {
   return (
     <div className={className}>
       <div className="card">
+        <p>
+          <sub>{post.zolo}</sub>
+        </p>
         <p className="my-4">{convert(post.date)}</p>
         <h2 className="h3 mb-2 font-normal">
           <p className="block">

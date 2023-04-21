@@ -9,14 +9,11 @@ import ZLogo from "../public/images/z-letter.json";
 import { firestore } from "@lib/firestore";
 import {
   collection,
-  QueryDocumentSnapshot,
-  DocumentData,
   query,
   where,
   limit,
   getDocs,
 } from "@firebase/firestore";
-import { useEffect, useState } from "react";
 
 const Home = ({ posts }) => {
   const { pagination } = config.settings;
@@ -112,7 +109,7 @@ export const getServerSideProps = async () => {
       body: e?.data()?.body || "",
       title: e?.data()?.title || "",
       date: e?.data()?.date.toDate().toString() || "",
-      author: e?.data()?.author || "",
+      zolo: e?.data()?.zolo || "",
     });
   });
   return {
