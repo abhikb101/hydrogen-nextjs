@@ -15,7 +15,7 @@ import {
   getDocs,
 } from "@firebase/firestore";
 
-const Home = ({ posts }) => {
+const Home = ({ posts, visitorCount }) => {
   const { pagination } = config.settings;
   const { name, bio } = config.profile;
   const sortPostByDate = sortByDate(posts);
@@ -23,6 +23,9 @@ const Home = ({ posts }) => {
   return (
     <Base>
       {/* profile */}
+      <div>
+      <button type="button" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 my-2 mx-2">{visitorCount} live visitors</button>
+      </div>
       <div className="section">
         <div className="container">
           <div className="row">
@@ -112,9 +115,11 @@ export const getServerSideProps = async () => {
       zolo: e?.data()?.zolo || "",
     });
   });
+  const visitor = Math.floor(Math.random() * 5) + 2
   return {
     props: {
       posts: postsArray,
+      visitorCount: visitor
     },
   };
 };
