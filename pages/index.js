@@ -14,11 +14,18 @@ import {
   limit,
   getDocs,
 } from "@firebase/firestore";
+import {  logEvent } from "firebase/analytics";
+import { analytics } from "@hooks/useAnalytics";
+import React, {useEffect} from "react";
 
 const Home = ({ posts, visitorCount }) => {
   const { pagination } = config.settings;
   const { name, bio } = config.profile;
   const sortPostByDate = sortByDate(posts);
+
+  useEffect(()=>{
+    logEvent(analytics, 'Homepage - user landed');
+  });
 
   return (
     <Base>
